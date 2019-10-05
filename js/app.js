@@ -6,6 +6,7 @@ $('button').on('click', () => {
 
   // invoke function to populate squares
   game.createSquares(50);
+  game.setTimer();
   
 });
 
@@ -39,7 +40,30 @@ game.checkValidPoke($color);
 const game = {
 
   score: 0,
-  time: 0,
+  time: 5,
+
+//1.7 this make a timer and increase by one
+  setTimer(){
+    // grabs timer from the html
+    const $timer = $('#timer');
+    
+    // makes the timers and if it reach 0 it stops  with clear interval
+    const interval = setInterval(()=>{
+
+      if (this.time === 0){
+        clearInterval(interval)
+        
+      } else {
+        this.time --
+      }
+      
+      
+      // updates the time on the DOM
+      $timer.text(`timer:${this.time}s`)
+
+    }, 1000)
+
+  },
 
   createSquares(numberOfSquares){
     for (let i = 0; i < numberOfSquares; i++){
@@ -72,7 +96,8 @@ const game = {
     } else {
       this.score -=1;
     }
-    
-  
+
+    // allows me to update the scoreboard once it clicks 
+    $('#score').text(`Scoreboard:${this.score}`)
   }
 }
